@@ -70,17 +70,20 @@ module.exports = function (grunt) {
 
     grunt.registerTask('build', 'bower');
     
+    grunt.registerTask('headlessStart', ['shell:xvfb','env:xvfb']);
+    grunt.registerTask('headlessFinish', ['shell:xvfb:kill']);
+    
     grunt.registerTask('unitTest', ['build','karma']);
-    grunt.registerTask('headless-unitTest', ['shell:xvfb','env:xvfb','unitTest','shell:xvfb:kill']);
+    grunt.registerTask('headless-unitTest', ['headlessStart','unitTest','headlessFinish']);
     
     grunt.registerTask('integrationTest', ['build','connect', 'protractor']);
-    grunt.registerTask('headless-integrationTest',['shell:xvfb','env:xvfb','integrationTest','shell:xvfb:kill']);
+    grunt.registerTask('headless-integrationTest',['headlessStart','integrationTest','headlessFinish']);
  
     grunt.registerTask('analyse', ['build','jshint']);
     
     grunt.registerTask('devBuild', ['build','unitTest', 'integrationTest', 'analyse']);
     
-    grunt.registerTask('ciBuild', ['build','headless-unitTest', 'headless-integrationTest', 'analyse']);
+    grunt.registerTask('ciBuild', ['build','headlessStart', 'unitTest', 'integrationTest', 'headlessFinish', 'analyse']);
 
     grunt.registerTask('default', ['devBuild']);
 };
