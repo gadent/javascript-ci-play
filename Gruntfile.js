@@ -59,7 +59,7 @@ module.exports = function (grunt) {
     grunt.registerTask('build', 'bower')
     grunt.registerTask('unitTest', ['karma'])
     grunt.registerTask('integrationTest', ['connect', 'protractor'])
-    grunt.registerTask('analyse', 'jshint')
+    grunt.registerTask('analyse', ['build','jshint'])
 
     grunt.registerTask('default', ['build','unitTest', 'integrationTest', 'analyse']);
 };

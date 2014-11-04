@@ -6,3 +6,6 @@ tmp
 .DS_Store
 angular-phonecat-snapshots
 bower_components/
+/HTML5Application/nbproject/private/
+/nbproject/private/
+/nbproject
