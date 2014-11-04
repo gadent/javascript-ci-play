@@ -8,6 +8,19 @@ module.exports = function (grunt) {
                 }
             }
         },
+        shell: {
+            xvfb: {
+                command: 'Xvfb :99 -ac -screen 0 1600x1200x24',
+                options: {
+                    async: true
+                }
+            }
+        },
+        env: {
+            xvfb: {
+                DISPLAY: ':99'
+            }
+        },
         karma: {
             unit: {
                 configFile: 'test/karma.conf.js',
@@ -48,16 +61,18 @@ module.exports = function (grunt) {
     });
 
     grunt.loadNpmTasks('grunt-bower-task');
-    
     grunt.loadNpmTasks('grunt-karma');
-    
     grunt.loadNpmTasks('grunt-contrib-connect')
     grunt.loadNpmTasks('grunt-protractor-runner')
-    
     grunt.loadNpmTasks('grunt-contrib-jshint');
+    grunt.loadNpmTasks('grunt-env');
+    grunt.loadNpmTasks('grunt-shell-spawn')
 
     grunt.registerTask('build', 'bower')
+    
     grunt.registerTask('unitTest', ['karma'])
+    grunt.registerTask('headless-unitTest', ['shell.xvfb','env:xvfb','unitTest','shell.xvfb.kill'])
+    
     grunt.registerTask('integrationTest', ['connect', 'protractor'])
     grunt.registerTask('analyse', ['build','jshint'])
 
