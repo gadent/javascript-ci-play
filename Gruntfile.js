@@ -71,7 +71,7 @@ module.exports = function (grunt) {
     grunt.registerTask('build', 'bower')
     
     grunt.registerTask('unitTest', ['karma'])
-    grunt.registerTask('headless-unitTest', ['shell.xvfb','env:xvfb','unitTest','shell.xvfb.kill'])
+    grunt.registerTask('headless-unitTest', ['shell:xvfb','env:xvfb','unitTest','shell:xvfb:kill'])
     
     grunt.registerTask('integrationTest', ['connect', 'protractor'])
     grunt.registerTask('analyse', ['build','jshint'])
