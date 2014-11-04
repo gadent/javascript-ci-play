@@ -62,21 +62,27 @@ module.exports = function (grunt) {
 
     grunt.loadNpmTasks('grunt-bower-task');
     grunt.loadNpmTasks('grunt-karma');
-    grunt.loadNpmTasks('grunt-contrib-connect')
-    grunt.loadNpmTasks('grunt-protractor-runner')
+    grunt.loadNpmTasks('grunt-contrib-connect');
+    grunt.loadNpmTasks('grunt-protractor-runner');
     grunt.loadNpmTasks('grunt-contrib-jshint');
     grunt.loadNpmTasks('grunt-env');
-    grunt.loadNpmTasks('grunt-shell-spawn')
+    grunt.loadNpmTasks('grunt-shell-spawn');
 
-    grunt.registerTask('build', 'bower')
+    grunt.registerTask('build', 'bower');
     
-    grunt.registerTask('unitTest', ['karma'])
-    grunt.registerTask('headless-unitTest', ['shell:xvfb','env:xvfb','unitTest','shell:xvfb:kill'])
+    grunt.registerTask('unitTest', ['build','karma']);
+    grunt.registerTask('headless-unitTest', ['shell:xvfb','env:xvfb','unitTest','shell:xvfb:kill']);
     
-    grunt.registerTask('integrationTest', ['connect', 'protractor'])
-    grunt.registerTask('analyse', ['build','jshint'])
+    grunt.registerTask('integrationTest', ['build','connect', 'protractor']);
+    grunt.registerTask('headless-integrationTest',['shell:xvfb','env:xvfb','integrationTest','shell:xvfb:kill']);
+ 
+    grunt.registerTask('analyse', ['build','jshint']);
+    
+    grunt.registerTask('devBuild', ['build','unitTest', 'integrationTest', 'analyse']);
+    
+    grunt.registerTask('ciBuild', ['build','headless-unitTest', 'headless-integrationTest', 'analyse']);
 
-    grunt.registerTask('default', ['build','unitTest', 'integrationTest', 'analyse']);
+    grunt.registerTask('default', ['devBuild']);
 };
 
 
