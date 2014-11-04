@@ -26,7 +26,7 @@ module.exports = function(config){
 
     autoWatch : true,
 
-    browsers : ['PhantomJS','Chrome'],
+    browsers : ['Chrome'],
 
     reporters: ['progress','junit','coverage'],
 
