@@ -52,10 +52,10 @@ module.exports = function (grunt) {
             options: {
                 jshintrc: true,
                 force: true,
-                reporter: require('jshint-jenkins-checkstyle-reporter'),
+                reporter: 'checkstyle',
                 reporterOutput: 'output/analysis/jshint_checkstyle.xml'
             },
-            all: ['app/js/*.js', 'app/js/**/*.js']
+            all: ['app/js/*.js', 'app/js/**/*.js'];
         }
     });
 
@@ -66,7 +66,6 @@ module.exports = function (grunt) {
     grunt.loadNpmTasks('grunt-contrib-jshint');
     grunt.loadNpmTasks('grunt-env');
     grunt.loadNpmTasks('grunt-shell-spawn');
- 
 
     grunt.registerTask('build', 'bower');
     
