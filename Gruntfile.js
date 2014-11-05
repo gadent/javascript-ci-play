@@ -55,7 +55,7 @@ module.exports = function (grunt) {
                 reporter: 'checkstyle',
                 reporterOutput: 'output/analysis/jshint_checkstyle.xml'
             },
-            all: ['app/js/*.js', 'app/js/**/*.js'];
+            all: ['app/js/*.js', 'app/js/**/*.js']
         }
     });
 
