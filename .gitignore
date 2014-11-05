@@ -5,7 +5,7 @@ tmp
 .idea
 .DS_Store
 angular-phonecat-snapshots
-bower_components/
+/app/libs/
 /HTML5Application/nbproject/private/
 /nbproject/private/
 /nbproject

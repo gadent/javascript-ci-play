@@ -46,7 +46,7 @@ module.exports = function (grunt) {
                     configFile: "test/protractor-conf.js", // Target-specific config file
                     args: {}
                 }
-            },
+            }
         },
         jshint: {
             options: {
@@ -55,8 +55,7 @@ module.exports = function (grunt) {
                 reporter: 'checkstyle',
                 reporterOutput: 'output/analysis/jshint_checkstyle.xml'
             },
-            all: ['app/js/*.js', 'app/js/**/*.js'],
-            //afterconcat: ['dist/output.js']
+            all: ['app/js/*.js', 'app/js/**/*.js'];
         }
     });
 
