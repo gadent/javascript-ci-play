@@ -52,7 +52,7 @@ module.exports = function (grunt) {
             options: {
                 jshintrc: true,
                 force: true,
-                reporter: 'checkstyle',
+                reporter: require('jshint-jenkins-checkstyle-reporter'),
                 reporterOutput: 'output/analysis/jshint_checkstyle.xml'
             },
             all: ['app/js/*.js', 'app/js/**/*.js'];
