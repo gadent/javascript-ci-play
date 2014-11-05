@@ -1,6 +1,8 @@
 module.exports = function (grunt) {
     grunt.initConfig({
         pkg: grunt.file.readJSON('package.json'),
+        
+        //resolve bower dependencies and place in appropriate location
         bower: {
             install: {
                 options: {
@@ -8,6 +10,7 @@ module.exports = function (grunt) {
                 }
             }
         },
+        //Startup a shell and start the Xvfb server (provides display on :99)
         shell: {
             xvfb: {
                 command: 'Xvfb :99 -ac -screen 0 1600x1200x24',
@@ -16,23 +19,29 @@ module.exports = function (grunt) {
                 }
             }
         },
+        
+        //export the DISPLAY environment variable so headless tests can connect to display
         env: {
             xvfb: {
                 DISPLAY: ':99'
             }
         },
+        //Unit test run (Runs once as opposed to watch as its a CI build)
         karma: {
             unit: {
                 configFile: 'test/karma.conf.js',
                 singleRun: true
             }
         },
+        //start a simple web server hosting the app to test
+        //(Required for protractor to run against)
         connect: {
             deployForTest: {
                 options: {
                 }
             }
         },
+        //Run E2E tests
         protractor: {
             options: {
                 configFile: "node_modules/protractor/example/conf.js", // Default config file
@@ -48,11 +57,16 @@ module.exports = function (grunt) {
                 }
             }
         },
+        //Static Analysis
         jshint: {
             options: {
                 jshintrc: true,
                 force: true,
+                //output using checkstyle format so results can be reported in
+                //jenkins
                 reporter: 'checkstyle',
+                //Dont put within sub-folder otherwise jenkins-checkstyle plugin
+                //cannot find source
                 reporterOutput: 'jshint_checkstyle.xml'
             },
             all: ['app/js/*.js', 'app/js/**/*.js']
@@ -69,6 +83,7 @@ module.exports = function (grunt) {
 
     grunt.registerTask('build', 'bower');
     
+    //For use in a CI environment (Start a shell and setup the environment)
     grunt.registerTask('headlessStart', ['shell:xvfb','env:xvfb']);
     grunt.registerTask('headlessFinish', ['shell:xvfb:kill']);
     
@@ -78,12 +93,16 @@ module.exports = function (grunt) {
     grunt.registerTask('integrationTest', ['build','connect', 'protractor']);
     grunt.registerTask('headless-integrationTest',['headlessStart','integrationTest','headlessFinish']);
  
+    //Static analysis
     grunt.registerTask('analyse', ['build','jshint']);
     
+    //build to run in dev environment (Windowing already setup)
     grunt.registerTask('devBuild', ['build','unitTest', 'integrationTest', 'analyse']);
     
+    //build to run in headless environment (Jenkins)
     grunt.registerTask('ciBuild', ['build','headlessStart', 'unitTest', 'integrationTest', 'headlessFinish', 'analyse']);
 
+    //leave default as non CI build so its easy for devs to run
     grunt.registerTask('default', ['devBuild']);
 };
 
