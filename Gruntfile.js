@@ -79,6 +79,7 @@ module.exports = function (grunt) {
     grunt.loadNpmTasks('grunt-env');
     grunt.loadNpmTasks('grunt-shell-spawn');
 
+
     grunt.registerTask('build', 'bower');
     
     //For use in a CI environment (Start a shell and setup the environment)
