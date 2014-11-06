@@ -6,9 +6,7 @@ describe('PhoneCat App', function() {
 
   it('should redirect index.html to index.html#/phones', function() {
     browser.get('app/index.html');
-    browser.getLocationAbsUrl().then(function(url) {
-        expect(url.split('#')[1]).toBe('/phones');
-      });
+    expect(browser.getLocationAbsUrl()).toMatch('/phones');
   });
 
 
@@ -66,9 +64,8 @@ describe('PhoneCat App', function() {
       var query = element(by.model('query'));
       query.sendKeys('nexus');
       element.all(by.css('.phones li a')).first().click();
-      browser.getLocationAbsUrl().then(function(url) {
-        expect(url.split('#')[1]).toBe('/phones/nexus-s');
-      });
+      expect(browser.getLocationAbsUrl()).toMatch('/phones/nexus-s');
+      
     });
   });
 

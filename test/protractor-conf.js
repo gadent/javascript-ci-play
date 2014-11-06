@@ -1,5 +1,6 @@
 exports.config = {
   allScriptsTimeout: 11000,
+  getPageTimeout: 10000,
 
   specs: [
     'e2e/*.js'
@@ -9,7 +10,6 @@ exports.config = {
     'browserName': 'chrome'
   },
 
-  chromeOnly: true,
 
   baseUrl: 'http://localhost:8000/',
 

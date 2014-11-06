@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<testsuites>
+<testsuite name="PhoneCat App" errors="0" tests="1" failures="0" time="29.429" timestamp="2014-11-06T17:32:49">
+  <testcase classname="PhoneCat App" name="should redirect index.html to index.html#/phones" time="6.209"></testcase>
+</testsuite>
+<testsuite name="PhoneCat App.Phone list view" errors="0" tests="3" failures="0" time="16.251" timestamp="2014-11-06T17:32:55">
+  <testcase classname="PhoneCat App.Phone list view" name="should filter the phone list as a user types into the search box" time="5.954"></testcase>
+  <testcase classname="PhoneCat App.Phone list view" name="should be possible to control phone order via the drop down select box" time="5.687"></testcase>
+  <testcase classname="PhoneCat App.Phone list view" name="should render phone specific links" time="4.609"></testcase>
+</testsuite>
+<testsuite name="PhoneCat App.Phone detail view" errors="0" tests="3" failures="0" time="6.967" timestamp="2014-11-06T17:33:12">
+  <testcase classname="PhoneCat App.Phone detail view" name="should display nexus-s page" time="1.998"></testcase>
+  <testcase classname="PhoneCat App.Phone detail view" name="should display the first phone image as the main phone image" time="1.944"></testcase>
+  <testcase classname="PhoneCat App.Phone detail view" name="should swap main image if a thumbnail image is clicked on" time="3.025"></testcase>
+</testsuite>
+</testsuites>

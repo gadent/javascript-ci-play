@@ -1,10 +1,8 @@
-'use strict'
+var phonecatAnimations = angular.module('phonecatAnimations', ['ngAnimate']);
 
+phonecatAnimations.animation('.phone', function() {
 
-define(['jquery'],function(){
-
-  function phoneAnimation(){
-    var animateUp = function(element, className, done) {
+  var animateUp = function(element, className, done) {
     if(className != 'active') {
       return;
     }
@@ -51,12 +49,4 @@ define(['jquery'],function(){
     addClass: animateUp,
     removeClass: animateDown
   };
-
-  }
-
-  phoneAnimation.$inject=[];
-
-  return phoneAnimation;
-
-
 });

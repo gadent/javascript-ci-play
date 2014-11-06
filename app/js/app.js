@@ -1,14 +1,28 @@
 'use strict';
 
-console.log("in app.js");
-
 /* App Module */
-define(['config', 'filters/phonecatFilters',
-	'controllers/phonecatControllers','animations/phonecatAnimations'],
- 
-  function(config){
-    var app = angular.module('phonecatApp', ['ngRoute', 'phonecatControllers', 'phonecatFilters', 'phonecatAnimations']);
-    app.config(config);
 
- 
-});
+var phonecatApp = angular.module('phonecatApp', [
+  'ngRoute',
+  'phonecatAnimations',
+
+  'phonecatControllers',
+  'phonecatFilters',
+  'phonecatServices'
+]);
+
+phonecatApp.config(['$routeProvider',
+  function($routeProvider) {
+    $routeProvider.
+      when('/phones', {
+        templateUrl: 'partials/phone-list.html',
+        controller: 'PhoneListCtrl'
+      }).
+      when('/phones/:phoneId', {
+        templateUrl: 'partials/phone-detail.html',
+        controller: 'PhoneDetailCtrl'
+      }).
+      otherwise({
+        redirectTo: '/phones'
+      });
+  }]);
