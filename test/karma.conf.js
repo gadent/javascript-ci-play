@@ -24,7 +24,7 @@ module.exports = function (config) {
             'app/js/*.js': ['coverage']
         },
         junitReporter: {
-            outputFile: 'output/unitTest/unit.xml',
+            outputFile: '../output/unitTest/unit.xml',
             suite: 'unit'
         },
         coverageReporter: {
