@@ -1,6 +1,7 @@
 logs/*
 !.gitkeep
 node_modules/
+bower_components/
 tmp
 .idea
 .DS_Store
@@ -10,3 +11,6 @@ angular-phonecat-snapshots
 /nbproject/private/
 /nbproject
 /output
+/dest/app/nbproject/private/
+/dist/
+jshint_checkstyle.xml

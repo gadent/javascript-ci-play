@@ -1,6 +1,6 @@
 module.exports = function (config) {
     config.set({
-        basePath: '../',
+        basePath: '..',
         frameworks: ["jasmine"],
         files: [
             'app/libs/angular/angular.js',
