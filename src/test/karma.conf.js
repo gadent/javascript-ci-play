@@ -3,11 +3,9 @@ module.exports = function (config) {
         basePath: '..',
         frameworks: ["jasmine"],
         files: [
-            'app/libs/angular/angular.js',
-            'app/libs/angular-route/angular-route.js',
-            'app/libs/angular-resource/angular-resource.js',
-            'app/libs/angular-animate/angular-animate.js',
-            'app/libs/angular-mocks/angular-mocks.js',
+            'app/libs/jquery/*.js',
+            'app/libs/angular/*.js',
+            'app/libs/**/*.js',
             'app/js/*.js',
             'test/unit/**/*.js'
         ],
@@ -29,7 +27,7 @@ module.exports = function (config) {
         },
         coverageReporter: {
             type: 'cobertura',
-            dir: 'output/coverage/'
+            dir: '../output/coverage/'
         }
 
     });

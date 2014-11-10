@@ -10,7 +10,8 @@ module.exports = function (grunt) {
                 files: [
                     {
                         expand: true,
-                        src: ['app/partials/**', 'app/phones/**',  'app/img/**'],
+                        cwd: 'src',
+                        src: ['app/partials/**', 'app/phones/**',  'app/img/**', 'test/**'],
                         dest: 'dist'
                     }
                 ]
@@ -43,18 +44,8 @@ module.exports = function (grunt) {
         //Unit test run (Runs once as opposed to watch as its a CI build)
         karma: {
             unit: {
-                configFile: 'test/karma.conf.js',
-                basePath: '../dist/',
-                singleRun: true,
-                options: {
-                    files: [
-                        'app/libs/jquery/*.js',
-                        'app/libs/angular/*.js',
-                        'app/libs/**/*.js',
-                        'app/js/phonecat.min.js',
-                        '../test/unit/**/*.js'
-                    ]
-                }
+                configFile: 'dist/test/karma.conf.js',
+                singleRun: true
             }
         },
         //start a simple web server hosting the app to test
@@ -62,7 +53,7 @@ module.exports = function (grunt) {
         connect: {
             deployForTest: {
                 options: {
-                    base: 'dist'
+                    base: 'dist/'
                 }
             }
         },
@@ -75,7 +66,7 @@ module.exports = function (grunt) {
             },
             e2e: {// Grunt requires at least one target to run so you can simply put 'all: {}' here too.
                 options: {
-                    configFile: "test/protractor-conf.js", // Target-specific config file
+                    configFile: "dist/test/protractor-conf.js", // Target-specific config file
                     args: {}
                 }
             }
@@ -85,14 +76,12 @@ module.exports = function (grunt) {
             options: {
                 jshintrc: true,
                 force: true,
-                //output using checkstyle format so results can be reported in
-                //jenkins
                 reporter: 'checkstyle',
                 //Dont put within sub-folder otherwise jenkins-checkstyle plugin
                 //cannot find source
                 reporterOutput: 'jshint_checkstyle.xml'
             },
-            all: ['app/js/*.js', 'app/js/**/*.js']
+            all: ['src/app/js/*.js', 'src/app/js/**/*.js']
         },
         concat: {
             options: {
@@ -100,11 +89,11 @@ module.exports = function (grunt) {
                 banner: '/*! Enter own license data here */'
             },
             projectConcat: {
-                src: ['app/js/*.js'],
+                src: ['src/app/js/*.js'],
                 dest: 'dist/app/js/phonecat.min.js'
             },
             projectCssConcat: {
-                src: ['app/css/*.css'],
+                src: ['src/app/css/*.css'],
                 dest: 'dist/app/css/combined.min.css'
             }
         },
@@ -121,7 +110,7 @@ module.exports = function (grunt) {
         processhtml: {
             dist: {
                 files: {
-                    'dist/app/index.html': ['app/index.html']
+                    'dist/app/index.html': ['src/app/index.html']
                 }
             }
         }
