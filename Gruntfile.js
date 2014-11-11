@@ -130,7 +130,7 @@ module.exports = function (grunt) {
                 files: ['package.json'],
                 updateConfigs: ['pkg'],
                 commit: true,
-                commitFiles: ['-A'],
+                commitFiles: ['-a'],
                 createTag: true,
                 push: true,
                 pushTo: 'origin'
