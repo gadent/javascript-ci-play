@@ -1,5 +1,5 @@
 {
-  "version": "0.0.2",
+  "version": "0.0.1",
   "private": true,
   "name": "javascript-ci-play",
   "description": "Application to test web application continuous integration. Based upon the angular-phonecat application for AngularJS",
