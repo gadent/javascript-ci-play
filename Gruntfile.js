@@ -3,7 +3,7 @@ module.exports = function (grunt) {
         pkg: grunt.file.readJSON('package.json'),
         //resolve bower dependencies and place in appropriate location
         clean: {
-            cleanDist: ['dist']
+            cleanDist: ['dist', 'output']
         },
         copy: {
             copyUnoptimised: {
@@ -11,7 +11,7 @@ module.exports = function (grunt) {
                     {
                         expand: true,
                         cwd: 'src',
-                        src: ['app/partials/**', 'app/phones/**',  'app/img/**', 'test/**'],
+                        src: ['**', '!app/css/**', '!app/js/**', '!app/libs**', '!app/index.html'],
                         dest: 'dist'
                     }
                 ]
@@ -113,6 +113,28 @@ module.exports = function (grunt) {
                     'dist/app/index.html': ['src/app/index.html']
                 }
             }
+        },
+        compress: {
+            main: {
+                options: {
+                    archive: 'output/<%= pkg.name %>-<%= pkg.version %>.war',
+                    mode: 'zip'
+                },
+                files: [
+                    {expand: true, cwd: 'dist/app', src: ['**'], filter: 'isFile'}, // includes files in path
+                ]
+            }
+        },
+        bump: {
+            options: {
+                files: ['package.json'],
+                updateConfigs: ['pkg'],
+                commit: true,
+                commitFiles: ['-a'],
+                createTag: true,
+                push: true,
+                pushTo: 'origin'
+            }
         }
 
     });
@@ -128,7 +150,26 @@ module.exports = function (grunt) {
     grunt.loadNpmTasks('grunt-contrib-uglify');
     grunt.loadNpmTasks('grunt-contrib-clean');
     grunt.loadNpmTasks('grunt-processhtml');
+    grunt.loadNpmTasks('grunt-contrib-compress');
+    grunt.loadNpmTasks('grunt-bump');
 
+    grunt.registerTask('bumpToSnapshot', 'Bump the version to a SNAPSHOT version', function () {
+        var v = grunt.config.get('pkg').version + '-SNAPSHOT';
+        grunt.option('setversion', v);
+        grunt.task.run('bump-only');
+    });
+    
+    grunt.registerTask('smart-commit', '', function(){
+       
+       if(grunt.file.exists('.svn')){
+           console.log('SVN');
+       }else{
+            //assume its git
+           grunt.option('bump.options.push', false);
+           grunt.task.run('bump-commit');
+       }
+    });
+    
     grunt.registerTask('optimise', ['concat', 'uglify', 'processhtml']);
 
     grunt.registerTask('build', ['clean', 'bower', 'copy', 'optimise']);
@@ -147,6 +188,17 @@ module.exports = function (grunt) {
     grunt.registerTask('ciBuild', ['build', 'headlessStart', 'unitTest', 'integrationTest', 'headlessFinish', 'analyse']);
     //leave default as non CI build so its easy for devs to run
     grunt.registerTask('default', ['devBuild']);
+
+    grunt.registerTask('package', ['compress']);
+    grunt.registerTask('deploy', ['package']);
+
+    //1. Bump-Only to make it a release version
+    //2. Commit
+    //3. TAG
+    //4. Bump-Only to update the version without snapshot
+    //5. Bump to a snapshot version
+    //6. Commit
+    grunt.registerTask('release', ['bump-only', 'smart-commit',/* COMMIT STUFF IN HERE */'bump-only', 'bumpToSnapshot'])
 };
 
 
