@@ -165,7 +165,6 @@ module.exports = function (grunt) {
            console.log('SVN');
        }else{
             //assume its git
-           grunt.option('bump.options.push', false);
            grunt.task.run('bump-commit');
        }
     });
