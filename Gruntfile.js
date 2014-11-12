@@ -176,7 +176,7 @@ module.exports = function (grunt) {
     //build to run in dev environment (Windowing already setup)
     grunt.registerTask('devBuild', ['build', 'unitTest', 'integrationTest', 'yslow_test', 'analyse']);
     //build to run in headless environment (Jenkins)
-    grunt.registerTask('ciBuild', ['build', 'headlessStart', 'unitTest', 'integrationTest_test', 'yslow', 'headlessFinish', 'analyse']);
+    grunt.registerTask('ciBuild', ['build', 'headlessStart', 'unitTest', 'integrationTest', 'yslow_test', 'headlessFinish', 'analyse']);
     //leave default as non CI build so its easy for devs to run
     grunt.registerTask('default', ['devBuild']);
     grunt.registerTask('package', ['compress']);
