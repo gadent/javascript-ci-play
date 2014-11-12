@@ -123,6 +123,17 @@ module.exports = function (grunt) {
                 }
             }
         },
+        yslow_test: {
+            options: {
+                info: "grade",
+                format: "junit",
+                urls: ['http://localhost:8000/app/index.html','http://localhost:8000/app/index.html#/phones/nexus-s'],
+                reports: ['output/yslow/yslow.xml']
+            },
+            your_target: {
+                files: []
+            }
+        },
         compress: {
             main: {
                 options: {
@@ -149,7 +160,8 @@ module.exports = function (grunt) {
     grunt.loadNpmTasks('grunt-processhtml');
     grunt.loadNpmTasks('grunt-contrib-compress');
     grunt.loadNpmTasks('grunt-contrib-cssmin');
-    
+    grunt.loadNpmTasks('grunt-yslow-test');
+
     grunt.registerTask('optimise', ['concat', 'uglify', 'cssmin', 'processhtml']);
     grunt.registerTask('build', ['clean', 'bower', 'copy', 'optimise']);
     //For use in a CI environment (Start a shell and setup the environment)
@@ -162,9 +174,9 @@ module.exports = function (grunt) {
     //Static analysis
     grunt.registerTask('analyse', ['jshint']);
     //build to run in dev environment (Windowing already setup)
-    grunt.registerTask('devBuild', ['build', 'unitTest', 'integrationTest', 'analyse']);
+    grunt.registerTask('devBuild', ['build', 'unitTest', 'integrationTest', 'yslow_test', 'analyse']);
     //build to run in headless environment (Jenkins)
-    grunt.registerTask('ciBuild', ['build', 'headlessStart', 'unitTest', 'integrationTest', 'headlessFinish', 'analyse']);
+    grunt.registerTask('ciBuild', ['build', 'headlessStart', 'unitTest', 'integrationTest_test', 'yslow', 'headlessFinish', 'analyse']);
     //leave default as non CI build so its easy for devs to run
     grunt.registerTask('default', ['devBuild']);
     grunt.registerTask('package', ['compress']);
